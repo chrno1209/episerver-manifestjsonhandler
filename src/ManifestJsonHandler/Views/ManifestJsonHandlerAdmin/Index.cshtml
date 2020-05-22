@@ -1,0 +1,59 @@
+﻿@using System.Web.Mvc.Html
+@using System.Web.Mvc
+@inherits System.Web.Mvc.WebViewPage<ManifestJsonHandler.Models.ViewModels.ManifestJsonViewModel>
+@{
+  Layout = "../Shared/Layout.cshtml";
+}
+
+<h1 class="epi-prefix">Manage manifest.json</h1>
+
+@if (Model.HasSaved)
+{
+  <div class="EP-systemMessage EP-systemMessage-None">Sucessfully saved manifest.json content.</div>
+}
+
+@using (Html.BeginForm("Save", "ManifestJsonHandlerAdmin", FormMethod.Post, new { id = "frmManifest" }))
+{
+  <div>
+    <span>Select your site and host to edit the manifest.json file:</span> @Html.DropDownListFor(m => m.SiteId, Model.SiteList)
+  </div>
+
+  <br />
+  <div style="min-width: 300px; max-width: 770px;">
+    <div id="txtData" style="height: 500px; border: 1px solid #ccc;">@Html.Raw(Model.Data)</div>
+    @Html.HiddenFor(m => m.Data, new { id = "hdData" })
+  </div>
+
+  <br />
+  <div class="epi-buttonContainer">
+    <span class="epi-cmsButton">
+      <input class="epi-cmsButton-text epi-cmsButton-tools epi-cmsButton-Save" ID="btnSave" value="Save" type="submit" />
+    </span>
+  </div>
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/ace.min.js"></script>
+<script>
+  $(document).ready(function () {
+    ace.config.set("basePath", "https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.11/");
+    var editor = ace.edit("txtData");
+    editor.session.setMode("ace/mode/json");
+
+    $('#frmManifest').on('submit', function () {
+      $('#hdData').val(editor.getValue());
+    });
+
+    $("#SiteId").change(function () {
+      var selected = $("#SiteId option:selected").val();
+
+      editor.setReadOnly(true);
+
+      $.post('@Url.Action("GetDataBySite")', { key: selected }).done(function (data) {
+        editor.setReadOnly(false);
+        editor.setValue(data);
+        $('#hdData').val(data);
+      });
+    });
+  });
+</script>

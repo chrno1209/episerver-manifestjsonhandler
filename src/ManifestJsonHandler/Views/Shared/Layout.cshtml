@@ -1,0 +1,24 @@
+﻿@using EPiServer.Framework.Web.Mvc.Html
+@using EPiServer.Shell
+@using EPiServer.Shell.Web.Mvc.Html
+@inherits System.Web.Mvc.WebViewPage
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>Manifest Json handler</title>
+  <link rel="stylesheet" type="text/css" href="@Paths.ToShellClientResource("ClientResources/epi/themes/legacy/ShellCore.css")" />
+  <link rel="stylesheet" type="text/css" href="@Paths.ToShellClientResource("ClientResources/epi/themes/legacy/ShellWidgets.css")" />
+  <link rel="stylesheet" type="text/css" href="@Paths.ToShellClientResource("ClientResources/epi/themes/legacy/ShellCoreLightTheme.css")" />
+  <link href="/App_Themes/Default/Styles/system.css" type="text/css" rel="stylesheet" />
+  <link href="/App_Themes/Default/Styles/ToolButton.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+  <div class="epi-contentContainer epi-padding">
+    <div class="epi-contentArea">
+      @RenderBody()
+    </div>
+  </div>
+</body>
+</html>
