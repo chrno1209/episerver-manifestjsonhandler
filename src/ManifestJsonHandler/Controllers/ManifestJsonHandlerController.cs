@@ -21,7 +21,7 @@ namespace ManifestJsonHandler.Controllers
             var hostLookUpArray = _siteDefinitionRepository.List().SelectMany(sd => sd.Hosts, (sd, host) => host.Name).ToArray();
             var siteKey = _manifestJsonService.GetSiteKey(SiteDefinition.Current.Id, hostLookUpArray.Contains(Request.Url.Host) ? Request.Url.Host : "*");
 
-            return Content(_manifestJsonService.Get(siteKey), "application/json");
+            return Content(_manifestJsonService.Get(siteKey), "application/manifest+json");
         }
     }
 }
